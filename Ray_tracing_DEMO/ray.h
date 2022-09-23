@@ -12,7 +12,7 @@
 //==============================================================================================
 
 #include "vec3.h"
-
+#include "common.h"
 
 class ray {
     public:
@@ -21,7 +21,7 @@ class ray {
             : orig(origin), dir(direction), tm(0)
         {}
 
-        ray(const point3& origin, const vec3& direction, double time)
+        ray(const point3& origin, const vec3& direction, double time )
             : orig(origin), dir(direction), tm(time)
         {}
 

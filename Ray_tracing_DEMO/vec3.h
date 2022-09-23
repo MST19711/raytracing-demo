@@ -13,6 +13,7 @@
 
 #include <cmath>
 #include <iostream>
+#include "common.h"
 
 using std::sqrt;
 using std::fabs;

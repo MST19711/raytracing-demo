@@ -11,7 +11,7 @@
 // along with this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 //==============================================================================================
 
-#include "C:\Users\CX_L\Documents\Ray_tracing_DEMO\common.h"
+#include "common.h"
 
 
 class camera {

@@ -9,13 +9,13 @@
 // along with this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 //==============================================================================================
 
-#include "C:\Users\CX_L\Documents\Ray_tracing_DEMO\common.h"
+#include "common.h"
 
-#include "C:\Users\CX_L\Documents\Ray_tracing_DEMO\camera.h"
-#include "C:\Users\CX_L\Documents\Ray_tracing_DEMO\color.h"
-#include "C:\Users\CX_L\Documents\Ray_tracing_DEMO\hitable_list.h"
-#include "C:\Users\CX_L\Documents\Ray_tracing_DEMO\material.h"
-#include "C:\Users\CX_L\Documents\Ray_tracing_DEMO\sphere.h"
+#include "camera.h"
+#include "color.h"
+#include "hitable_list.h"
+#include "material.h"
+#include "sphere.h"
 
 #include <fstream>
 #include <iostream>

@@ -4,7 +4,7 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "C:\\Users\\CX_L\\Documents\\Ray_tracing_DEMO"
+                //"C:\\Users\\CX_L\\Documents\\Ray_tracing_DEMO"
             ],
             "defines": [
                 "_DEBUG",
