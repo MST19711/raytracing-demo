@@ -1,8 +1,9 @@
+#include "config.hpp"
 #include "eigen-3.4.0/Eigen/Eigen"
 
 #ifndef IMG_OUT
 #define IMG_OUT
-typedef Eigen::Vector3d color;
+
 class img {
   public:
     img(int W, int H, std::string save_path);
@@ -10,8 +11,8 @@ class img {
     color *operator[](int n);
     int width() { return _width; }
     int height() { return _height; }
+    std::string save_path() { return _save_path; }
     virtual bool save() = 0;
-    friend class img_ppm8;
 
   private:
     int _width, _height;

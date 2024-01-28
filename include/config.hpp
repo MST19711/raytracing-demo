@@ -9,6 +9,7 @@ const double PI = acos(-1);
 
 typedef Eigen::Vector4d point;
 typedef Eigen::Vector4d direction;
+typedef Eigen::Vector3d color;
 
 const std::string Save_path = "../test.ppm";
 const int IMG_WIDTH = 800;
