@@ -1,6 +1,8 @@
 #include "config.hpp"
 #include "eigen-3.4.0/Eigen/Eigen"
 #include "ray.hpp"
+#include "utility.hpp"
+#include <mutex>
 
 #ifndef CAMERA
 #define CAMERA
@@ -18,5 +20,6 @@ class camera {
     direction _up, _dh, _dw, _left_down_corner;
     int _next_pix, _W, _H;
     double _aspect_ratio, _FOVW;
+    std::mutex _nextpix_clock;
 };
 #endif

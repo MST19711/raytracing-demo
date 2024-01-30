@@ -10,5 +10,5 @@ aux_source_directory(${PROJECT_SOURCE_DIR}/src CPP_SRC)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS on)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
-add_executable(demo ${CPP_SRC})
+add_executable(rt_demo ${CPP_SRC})
 

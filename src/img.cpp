@@ -1,5 +1,6 @@
 #include "img.hpp"
 #include "eigen-3.4.0/Eigen/Eigen"
+#include <cmath>
 #include <fstream>
 #include <iostream>
 
@@ -16,6 +17,7 @@ img::~img() {
 }
 color *img::operator[](int n) { return _buffer[n]; }
 
+inline double L2G(double x) { return std::sqrt(x); }
 bool img_ppm8::save() {
     std::ofstream imgout;
     imgout.open(save_path(), std::ios::out);
@@ -23,9 +25,10 @@ bool img_ppm8::save() {
     imgout << "P3\n" << width() << ' ' << height() << "\n255\n";
     for (int j = height() - 1; j >= 0; --j) {
         for (int i = width() - 1; i >= 0; --i) {
-            int ir = static_cast<int>(255.99 * (*this)[i][j].x());
-            int ig = static_cast<int>(255.99 * (*this)[i][j].y());
-            int ib = static_cast<int>(255.99 * (*this)[i][j].z());
+            int ir = static_cast<int>(255.99 * L2G((*this)[i][j].x()));
+            int ig = static_cast<int>(255.99 * L2G((*this)[i][j].y()));
+            int ib = static_cast<int>(255.99 * L2G((*this)[i][j].z()));
+
             imgout << ir << ' ' << ig << ' ' << ib << '\n';
         }
     }

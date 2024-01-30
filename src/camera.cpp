@@ -4,13 +4,15 @@
 #include <cmath>
 #include <iostream>
 #include <math.h>
+#include <mutex>
+#include <thread>
 
 camera::camera(ray position, direction up, double FOVW, double aspect_ratio,
                int W, int H) {
     _position = position, _up = up.normalized(), _aspect_ratio = aspect_ratio,
     _W = W, _FOVW = FOVW, _H = H;
     _next_pix = 0;
-    _position.normalized();
+    _position.normalize();
     double dx = std::tan(_FOVW / 2.0) * (2.0 / (static_cast<double>(W)));
     Eigen::Vector3d up3d = _up.segment<3>(0),
                     dir3d = _position.dir().segment<3>(0),
@@ -22,9 +24,11 @@ camera::camera(ray position, direction up, double FOVW, double aspect_ratio,
 direction camera::pix_w() { return _dw; }
 direction camera::pix_h() { return _dh; }
 ray camera::get_next_pix() {
+    //_nextpix_clock.lock();
     direction dir =
         _left_down_corner + (_next_pix % _W) * _dw + (_next_pix / _W) * _dh;
     _next_pix++, _next_pix %= (_W * _H);
+    //_nextpix_clock.unlock();
     return std::move(ray(dir, _position.orig()));
 }
 bool camera::reset_nexe_pix() {
