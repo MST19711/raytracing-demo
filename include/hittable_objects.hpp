@@ -25,7 +25,7 @@ class world {
   public:
     world();
     ~world();
-    sky *sky;
+    sky *w_sky;
     std::vector<hittable_object *> H_object_list;
 };
 extern world *main_world;

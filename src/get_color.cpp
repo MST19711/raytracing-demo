@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <iostream>
 
+extern world *main_world;
 color get_color(const ray &R, int depth) {
     if (depth <= 0)
         return color(0, 0, 0);
@@ -25,6 +26,6 @@ color get_color(const ray &R, int depth) {
     if (nearestOBJ != nullptr)
         return nearestOBJ->o_get_color(nearest_hit, depth - 1);
     else
-        return main_world->sky->s_get_color(R);
+        return main_world->w_sky->s_get_color(R);
 }
 // bool load_world(world &W) {}

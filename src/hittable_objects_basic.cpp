@@ -10,7 +10,7 @@ color shadeblue_sky::s_get_color(const ray &R_in) {
 }
 
 world::world() { // set default world
-    sky = new shadeblue_sky;
+    w_sky = new shadeblue_sky;
     H_object_list.push_back(new m_Sphere(
         point(0, -2.7, 0, 1), 0.5,
         new mtr_True_Lambertian_Reflection(color(0.5, 0, 0.5), 1, 1)));
@@ -26,7 +26,7 @@ world::world() { // set default world
 }
 
 world::~world() {
-    delete sky;
+    delete w_sky;
     for (auto i : H_object_list)
         delete i;
 }
