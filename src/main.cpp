@@ -6,13 +6,13 @@
 #include "ray.hpp"
 #include "utility.hpp"
 #include <cmath>
+#include <cstring>
 #include <iostream>
 #include <locale>
 #include <mutex>
 #include <queue>
 #include <thread>
 #include <time.h>
-#include <vector>
 
 void draw_pixel(const ray &pix_ray, camera &cam, world &W, color &buffer_addr) {
     color ret(0, 0, 0);
@@ -26,11 +26,18 @@ void draw_pixel(const ray &pix_ray, camera &cam, world &W, color &buffer_addr) {
 }
 
 world *main_world;
-int T_number = 7;
+int T_number = 4;
 std::queue<std::thread> T_list;
 
-int main() {
+int main(int argc, char *argv[]) {
+
+    for (int i = 0; i < argc; i++) {
+        if (std::strcmp(argv[i], "-t") == 0) {
+            T_number = std2int(std::string(argv[i + 1]));
+        }
+    }
     srand(time(0));
+    time_t start_time = time(0);
     img_ppm8 outputimg0(IMG_WIDTH, IMG_HEIGHT, Save_path);
     camera cam0(ray(cam0dir, cam0center), cam0up, cam0FOV, cam0aspect_ratio,
                 IMG_WIDTH, IMG_HEIGHT);
@@ -38,14 +45,19 @@ int main() {
     main_world = &world0;
     for (int j = 0; j < outputimg0.height(); j++) {
         for (int i = 0; i < outputimg0.width(); i++) {
+            ray pix_ray = cam0.get_next_pix();
+#ifdef MULTI_THREAD
             if (T_list.size() >= T_number) {
                 T_list.front().join();
                 T_list.pop();
             }
-            ray pix_ray = cam0.get_next_pix();
             std::thread new_t(draw_pixel, std::move(pix_ray), std::ref(cam0),
                               std::ref(world0), std::ref(outputimg0[i][j]));
             T_list.push(std::move(new_t));
+#else
+            draw_pixel(pix_ray, cam0, world0,
+                       outputimg0[i][j]); // single thread
+#endif
         }
         while (!T_list.empty()) {
             T_list.front().join();
@@ -55,4 +67,6 @@ int main() {
                   << "...\n";
     }
     outputimg0.save();
+    std::cout << "use " << time(0) - start_time << "s !!!!!\n";
+    return 0;
 }

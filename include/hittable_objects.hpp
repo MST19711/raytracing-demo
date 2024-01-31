@@ -72,15 +72,9 @@ class m_Sphere : public Sphere {
   public:
     m_Sphere(point C, double R, material *M) : Sphere(C, R), _mtr(M) {}
     color o_get_color(const hit_record &hit, int depth);
+    ~m_Sphere() { delete _mtr; }
 
   private:
     material *_mtr;
-};
-class pure_clarity : public material {
-  public:
-    color m_get_color(const point &hit_point, const direction &norm,
-                      const direction &R_in, int depth) {
-        return get_color(ray(R_in, hit_point), depth);
-    }
 };
 #endif

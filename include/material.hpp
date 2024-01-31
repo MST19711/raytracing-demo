@@ -9,8 +9,15 @@
 class material {
   public:
     virtual color m_get_color(const hit_record &hit, int depth) = 0;
+    virtual ~material() {}
 };
 
+class pure_clarity : public material {
+  public:
+    color m_get_color(const hit_record &hit, int depth) {
+        return get_color(ray(hit.ray_in.dir(), hit.ray_in.orig()), depth);
+    }
+};
 class mtr_norm : public material {
   public:
     color m_get_color(const hit_record &hit, int depth);
@@ -24,6 +31,7 @@ class mtr_simple_diffuse : public material {
         _color.z() = MIN(_color.z(), 1);
     }
     color m_get_color(const hit_record &hit, int depth);
+    ~mtr_simple_diffuse() {}
 
   private:
     color _color;
@@ -38,6 +46,7 @@ class mtr_True_Lambertian_Reflection : public material {
         _color.z() = MIN(_color.z(), 1);
     }
     color m_get_color(const hit_record &hit, int depth);
+    ~mtr_True_Lambertian_Reflection() {}
 
   private:
     color _color;
@@ -52,6 +61,7 @@ class mtr_mirrored : public material {
         _color.z() = MIN(_color.z(), 1);
     }
     color m_get_color(const hit_record &hit, int depth);
+    ~mtr_mirrored() {}
 
   private:
     color _color;
@@ -66,10 +76,24 @@ class mtr_fuzzy_reflection : public material {
         _color.z() = MIN(_color.z(), 1);
     }
     color m_get_color(const hit_record &hit, int depth);
+    ~mtr_fuzzy_reflection() {}
 
   private:
     color _color;
     int _sample_times;
     double _fuzz;
+};
+
+class mtr_refraction : public material {
+  public:
+    mtr_refraction(color C) : _color(C) {
+        _color.x() = MIN(_color.x(), 1);
+        _color.y() = MIN(_color.y(), 1);
+        _color.z() = MIN(_color.z(), 1);
+    }
+    color m_get_color(const hit_record &hit, int depth);
+
+  private:
+    color _color;
 };
 #endif

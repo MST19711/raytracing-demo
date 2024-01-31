@@ -31,4 +31,12 @@ inline direction random_unit_vec() {
         R = direction(random_abs1(), random_abs1(), random_abs1(), 0);
     return R.normalized();
 }
+inline int std2int(std::string S) {
+    int ret = 0;
+    for (int i = 0; i < S.length(); i++) {
+        ret += S[i] - '0';
+        ret *= 10;
+    }
+    return ret / 10;
+}
 #endif

@@ -17,7 +17,7 @@ world::world() { // set default world
     // H_object_list.push_back(new Sphere(point(0, -2, 0, 1), 0.5));
     H_object_list.push_back(new m_Sphere(
         point(0, -1, -100.5, 1), 100,
-        new mtr_True_Lambertian_Reflection(color(0, 0.5, 0), 1, 1)));
+        new mtr_True_Lambertian_Reflection(color(0.1, 0.5, 0.1), 1, 1)));
     H_object_list.push_back(new m_Sphere(
         point(1, -2, 0, 1), 0.5, new mtr_mirrored(color(0.7, 0.7, 1), 1)));
     H_object_list.push_back(

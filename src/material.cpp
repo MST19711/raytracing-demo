@@ -50,11 +50,12 @@ color mtr_mirrored::m_get_color(const hit_record &hit, int depth) {
 }
 color mtr_fuzzy_reflection::m_get_color(const hit_record &hit, int depth) {
     color ret_color(0, 0, 0);
-    ret_color +=
-        get_color(ray(get_reflect(hit.ray_in.dir(), hit.norm).normalized() +
-                          _fuzz * random_unit_vec(),
-                      hit.hit_point),
-                  depth);
+    direction D = get_reflect(hit.ray_in.dir(), hit.norm).normalized() +
+                  _fuzz * random_unit_vec();
+    if (D.dot(hit.norm) <= 0) {
+        D -= 2 * hit.norm * (D.dot(hit.norm.normalized()));
+    }
+    ret_color += get_color(ray(D, hit.hit_point), depth);
     use_color(_color, ret_color);
     return ret_color;
 }
