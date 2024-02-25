@@ -17,10 +17,11 @@
 void draw_pixel(const ray &pix_ray, camera &cam, world &W, color &buffer_addr) {
     color ret(0, 0, 0);
     for (int i = 0; i < sample_per_pix; i++) {
-        ret += get_color(ray(pix_ray.dir() + (cam.pix_h() * random_double()) +
-                                 (cam.pix_w() * random_double()),
-                             pix_ray.orig()),
-                         MAX_DEPTH);
+        ret += get_color(
+            cam.lens_blur(ray(pix_ray.dir() + (cam.pix_h() * random_double()) +
+                                  (cam.pix_w() * random_double()),
+                              pix_ray.orig())),
+            MAX_DEPTH);
     }
     buffer_addr = ret / static_cast<double>(sample_per_pix);
 }
@@ -40,7 +41,7 @@ int main(int argc, char *argv[]) {
     time_t start_time = time(0);
     img_ppm8 outputimg0(IMG_WIDTH, IMG_HEIGHT, Save_path);
     camera cam0(ray(cam0dir, cam0center), cam0up, cam0FOV, cam0aspect_ratio,
-                IMG_WIDTH, IMG_HEIGHT);
+                IMG_WIDTH, IMG_HEIGHT, FC, lens_B);
     world world0;
     main_world = &world0;
     for (int j = 0; j < outputimg0.height(); j++) {

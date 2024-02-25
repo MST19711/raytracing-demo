@@ -14,5 +14,6 @@ class hit_record {
     direction norm;
     double flying_time;
     bool is_hit;
+    bool intoOBJ;
 };
 #endif

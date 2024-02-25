@@ -55,7 +55,7 @@ class mtr_True_Lambertian_Reflection : public material {
 };
 class mtr_mirrored : public material {
   public:
-    mtr_mirrored(color C, int T) : _color(C), _sample_times(1) {
+    mtr_mirrored(color C) : _color(C) {
         _color.x() = MIN(_color.x(), 1);
         _color.y() = MIN(_color.y(), 1);
         _color.z() = MIN(_color.z(), 1);
@@ -65,7 +65,6 @@ class mtr_mirrored : public material {
 
   private:
     color _color;
-    int _sample_times;
 };
 class mtr_fuzzy_reflection : public material {
   public:
@@ -86,14 +85,30 @@ class mtr_fuzzy_reflection : public material {
 
 class mtr_refraction : public material {
   public:
-    mtr_refraction(color C) : _color(C) {
+    mtr_refraction(color C, double E) : _color(C), _eta(E) {
         _color.x() = MIN(_color.x(), 1);
         _color.y() = MIN(_color.y(), 1);
         _color.z() = MIN(_color.z(), 1);
     }
     color m_get_color(const hit_record &hit, int depth);
+    ~mtr_refraction() {}
 
   private:
     color _color;
+    double _eta;
+};
+class mtr_Fresnel : public material {
+  public:
+    mtr_Fresnel(double E, material *rfl, material *rfr)
+        : _eta(E), _reflect(rfl), _refraction(rfr) {}
+    color m_get_color(const hit_record &hit, int depth);
+    ~mtr_Fresnel() {
+        delete _refraction;
+        delete _reflect;
+    }
+
+  private:
+    double _eta;
+    material *_refraction, *_reflect;
 };
 #endif

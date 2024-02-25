@@ -77,4 +77,21 @@ class m_Sphere : public Sphere {
   private:
     material *_mtr;
 };
+
+class hollow_Sphere : public hittable_object {
+  public:
+    hollow_Sphere(point C, double R_out, double R_in, material *M)
+        : _out_sph(new Sphere(C, R_out)), _in_sph(new Sphere(C, R_in)){};
+    ~hollow_Sphere() {
+        delete _out_sph;
+        delete _in_sph;
+        delete _mtr;
+    }
+    hit_record hit(const ray &R_in);
+    color o_get_color(const hit_record &hit, int depth);
+
+  private:
+    Sphere *_out_sph, *_in_sph;
+    material *_mtr;
+};
 #endif

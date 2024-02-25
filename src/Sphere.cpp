@@ -21,7 +21,8 @@ hit_record Sphere::hit(const ray &R_in) {
     else
         t = -1, ret.is_hit = false;
     ret.flying_time = t, ret.hit_point = R_in.at(t),
-    ret.norm = (*this).get_norm_at(ret.hit_point, R_in), ret.ray_in = R_in;
+    ret.norm = (*this).get_norm_at(ret.hit_point, R_in), ret.ray_in = R_in,
+    ret.intoOBJ = ((ret.hit_point - _center).dot(R_in.dir()) <= 0);
     return std::move(ret);
 }
 

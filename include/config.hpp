@@ -17,6 +17,7 @@ const interval universe(0.00000001, DBL_MAX);
 
 const double PI = acos(-1);
 const double C = 3 * 1e8;
+const double eta_air = 1;
 
 const int MAX_DEPTH = 10;
 typedef Eigen::Vector4d point;
@@ -33,10 +34,12 @@ const auto viewport_height = 2.0;
 const auto viewport_width =
     viewport_height * (static_cast<double>(IMG_WIDTH) / IMG_HEIGHT);
 
-const point cam0center = Eigen::Vector4d(0, 0, 0, 1);
-const direction cam0dir = Eigen::Vector4d(0, -1, 0, 0),
+const point cam0center = Eigen::Vector4d(0, 1, 0.4, 1);
+const direction cam0dir = Eigen::Vector4d(0, -2, -0.2, 0),
                 cam0up = Eigen::Vector4d(0, 0, 1, 0);
-const double cam0FOV = 0.7 * PI;
+const double cam0FOV = 0.5 * PI;
+const double lens_B = PI / 180;
+const point FC = point(-0.2, -1, 0.2, 1);
 
 const int sample_per_pix = 50;
 #endif
